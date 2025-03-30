@@ -1,6 +1,6 @@
 # Write your solution here
 import sys
-
+# APPROACH 1
 def check(cur_value,values_found):
   try:
     cur_value = int(cur_value)
@@ -91,3 +91,91 @@ def run(program_commands: list):
   run_loop(program_commands,count,program_commands)
   
   return generated_values
+
+# APPROACH 2
+
+def determine_value(value: int,variables: dict) -> int:
+  if value in variables:
+    return int(variables[value])
+  
+  return int(value)
+
+def initialize_variables(variables: dict) -> None:
+  all_letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+  for letter in all_letters:
+    variables[letter] = 0
+
+def run(program: list) -> list:
+  print_list = []
+  variables = {}
+  locations = []
+  initialize_variables(variables)
+
+  for position,instruction in enumerate(program):
+    if ":" in instruction:
+      location = instruction[:-1]
+      locations.append((location,position))
+  
+  i = 0
+
+  while i < len(program):
+    instruction = program[i]
+    parts = instruction.split(" ")
+    command = parts[0]
+    
+    if command == "PRINT":
+      value = parts[1]
+      value = determine_value(value,variables)
+      print_list.append(value)
+
+    if command == "MOV" :
+      var = parts[1]
+      value = parts[2]
+     
+      value = determine_value(value,variables)
+      variables[var] = value
+
+    if command == "ADD":
+      var = parts[1]
+      value = parts[2]
+
+      value = determine_value(value,variables)
+      variables[var] += value
+    
+    if command == "SUB":
+      var = parts[1]
+      value = parts[2]
+
+      value = determine_value(value,variables)
+      variables[var] -= value
+    
+    if command == "MUL":
+      var = parts[1]
+      value = parts[2]
+
+      value = determine_value(value,variables)
+      variables[var] *= value
+
+    if command == "JUMP":
+      to_jump = parts[1]
+      for loc in locations:
+        if loc[0] == to_jump:
+          i = loc[1]
+
+    if command == "IF":
+      oph1 = parts[1]
+      opr = parts[2]
+      oph2 = parts[3]
+
+      oph1 = determine_value(oph1, variables)
+      oph2 = determine_value(oph2, variables)
+      jump_location = parts[5]
+      if eval(f"{oph1} {opr} {oph2}"):
+        for loc in locations:
+          if loc[0] == jump_location:
+            i = loc[1]
+      
+    i += 1
+
+  return print_list
+
