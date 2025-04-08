@@ -3,4 +3,4 @@
   Link: https://programming-25.mooc.fi/.  
 
   CERTIFICATE:
-  https://drive.google.com/file/d/12JrkeYxeHHbbp59SE0keBS78KJ0DVNvP/view?usp=sharing
+  ![Home Page](https://drive.google.com/file/d/12JrkeYxeHHbbp59SE0keBS78KJ0DVNvP/view?usp=sharing)
